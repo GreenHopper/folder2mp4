@@ -3,7 +3,9 @@
 This simple bash script converts certain video files into a MP4 video format using H.264 and AC3 codecs. The main reason behind this was my PLEX media server running on an older Synology Disk Station, which was not able to transcode various file formats on the fly.
 
 Here is an example usage:
+```bash
 ./folder2mp4 /my/video/folder
+```
 
 The script basically does the following:
 * Find all video files inside the passed directory or its subfolders
