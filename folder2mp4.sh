@@ -40,13 +40,27 @@ for convert in "${convertList[@]}";
 do
 	filename=${convert%.*}
 	filename+=".mp4"
-	if [ ! -f "$filename" ]; 
+	if [ ! -s "$filename" ] 
 	then
 	    echo "Starting conversion for $convert"
 		echo "ffmpeg -i $convert -codec:v libx264 -tune -film -codec:a libfdk_aac -b:a 384k -movflags +faststart $filename"
 		ffmpeg -i "$convert" -codec:v libx264 -tune -film -codec:a ac3 -b:a 384k -movflags +faststart "$filename"
 	else
-		echo "Skipped conversion as destination file already exists"
+		sourcesize=$(wc -c <"$convert")
+		targetsize=$(wc -c <"$filename")
+		percentage=$(( $targetsize * 100 / $sourcesize ))
+		echo $sourcesize
+		echo $targetsize
+		echo $percentage
+		if [ $percentage -ge 40 ]
+		then
+			echo $filename
+			echo "Skipped conversion as destination file already exists"
+		else
+			echo "Looks like conversion was not finished - restarting for $convert"
+			echo "ffmpeg -i $convert -codec:v libx264 -tune -film -codec:a libfdk_aac -b:a 384k -movflags +faststart $filename"
+			ffmpeg -i "$convert" -codec:v libx264 -tune -film -codec:a ac3 -b:a 384k -movflags +faststart "$filename"
+		fi
 	fi
 done
 echo "Converted ${#convertList[@]} convert" 
