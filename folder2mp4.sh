@@ -44,7 +44,7 @@ do
 	then
 	    echo "Starting conversion for $convert"
 		echo "ffmpeg -i $convert -codec:v libx264 -tune -film -codec:a libfdk_aac -b:a 384k -movflags +faststart $filename"
-		ffmpeg -i "$convert" -codec:v libx264 -tune -film -codec:a ac3 -b:a 384k -movflags +faststart "$filename"
+		ffmpeg -y -i "$convert" -codec:v libx264 -tune -film -codec:a ac3 -b:a 384k -movflags +faststart "$filename"
 	else
 		sourcesize=$(wc -c <"$convert")
 		targetsize=$(wc -c <"$filename")
