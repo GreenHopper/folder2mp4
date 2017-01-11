@@ -52,7 +52,7 @@ do
 		echo $sourcesize
 		echo $targetsize
 		echo $percentage
-		if [ $percentage -ge 40 ]
+		if [ $percentage -ge 30 ]
 		then
 			echo $filename
 			echo "Skipped conversion as destination file already exists"
